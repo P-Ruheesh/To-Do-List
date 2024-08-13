@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color:#e9d4cf;
+        }
+        #app {
+            background: rgb(110, 105, 105);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(206, 192, 192, 0.1);
+            width: 300px;
+        }
+        h1 {
+            margin-top: 0;
+        }
+        input[type="text"] {
+            width: calc(100% - 42px);
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        button {
+            margin-left: 110 px;
+            padding: 10px;
+            border: none;
+            background: #6e99c7;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        li span {
+            flex-grow: 1;
+        }
+        li button {
+            background: rgb(186, 32, 32);
+            padding: 5px 10px;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        li .edit-button {
+            background: #59e119; /* Different color for edit button */
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>To-Do List</h1>
+        <input type="text" id="taskInput" placeholder="Task1">
+        <input type="text" id="taskInput1" placeholder="Task2">
+        <input type="text" id="taskInput2" placeholder="Task3">
+        <input type="text" id="taskInput2" placeholder="Task4">
+        <div>
+        <button onclick="addTask()">Add</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            const taskInput1 = document.getElementById('taskInput1');
+            const taskInput2 = document.getElementById('taskInput2');
+            const taskList = document.getElementById('taskList');
+            const taskText = taskInput.value;
+            const taskText1 = taskInput1.value;
+            const taskText2 = taskInput2.value;
+
+            if (taskText === '' && taskText1 === '' && taskText2 === '') {
+                alert('Please enter at least one task');
+                return;
+            }
+
+            if (taskText !== '') {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <span>${taskText}</span>
+                    <button class="edit-button" onclick="editTask(this)">Edit</button>
+                    <button onclick="removeTask(this)">Remove</button>
+                `;
+                taskList.appendChild(listItem);
+                taskInput.value = '';
+            }
+
+            if (taskText1 !== '') {
+                const listItem1 = document.createElement('li');
+                listItem1.innerHTML = `
+                    <span>${taskText1}</span>
+                    <button class="edit-button" onclick="editTask(this)">Edit</button>
+                    <button onclick="removeTask(this)">Remove</button>
+                `;
+                taskList.appendChild(listItem1);
+                taskInput1.value = '';
+            }
+
+            if (taskText2 !== '') {
+                const listItem2 = document.createElement('li');
+                listItem2.innerHTML = `
+                    <span>${taskText2}</span>
+                    <button class="edit-button" onclick="editTask(this)">Edit</button>
+                    <button onclick="removeTask(this)">Remove</button>
+                `;
+                taskList.appendChild(listItem2);
+                taskInput2.value = '';
+            }
+        }
+
+        function removeTask(button) {
+            const listItem = button.parentElement;
+            listItem.remove();
+        }
+
+        function editTask(button) {
+            const listItem = button.parentElement;
+            const taskSpan = listItem.querySelector('span');
+            const taskText = taskSpan.innerText;
+            const newTaskText = prompt('Edit task:', taskText);
+            if (newTaskText !== null && newTaskText.trim() !== '') {
+                taskSpan.innerText = newTaskText.trim();
+            }
+        }
+    </script>
+</body>
+</html>
